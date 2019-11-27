@@ -1,4 +1,4 @@
-package com.example.assignment.API;
+package com.example.assignment.Interfaces;
 
 import android.content.Context;
 

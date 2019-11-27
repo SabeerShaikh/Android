@@ -1,4 +1,4 @@
-package com.example.assignment.API;
+package com.example.assignment.Interfaces;
 
 import com.example.assignment.dataModel.AssignmentModel;
 

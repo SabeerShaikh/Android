@@ -2,10 +2,10 @@ package com.example.assignment.Presenter;
 
 import android.content.Context;
 
-import com.example.assignment.API.GetDataListener;
-import com.example.assignment.API.MainInteractor;
-import com.example.assignment.API.MainPresenter;
-import com.example.assignment.API.MainView;
+import com.example.assignment.Interfaces.GetDataListener;
+import com.example.assignment.Interfaces.MainInteractor;
+import com.example.assignment.Interfaces.MainPresenter;
+import com.example.assignment.Interfaces.MainView;
 import com.example.assignment.dataModel.AssignmentDataManager;
 import com.example.assignment.dataModel.AssignmentModel;
 

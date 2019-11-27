@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.assignment.API.MainView;
+import com.example.assignment.Interfaces.MainView;
 import com.example.assignment.Adapter.AssignmentDemoAdapter;
 import com.example.assignment.DB.AppDatabase;
 import com.example.assignment.Presenter.MainPresenterImpl;
