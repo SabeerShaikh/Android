@@ -27,7 +27,7 @@ public class AssignmentDemoAdapter extends RecyclerView.Adapter<ItemViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, int position) {
 
         AssignmentModel assignmentModel = mDatalist.get(position);
         holder.testTitle.setText(assignmentModel.getmTilte());
@@ -37,7 +37,20 @@ public class AssignmentDemoAdapter extends RecyclerView.Adapter<ItemViewHolder> 
         Picasso.get()
                 .load(assignmentModel.getImageHref())
                 .fit()
-                .into(holder.imageView);
+                .into(holder.imageView,new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        //Success image already loaded into the view
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        //Error placeholder image already loaded into the view, do further handling of this situation here
+                        holder.imageView.setImageResource(R.drawable.ic_launcher);
+                    }
+
+
+                });
 
 
     }

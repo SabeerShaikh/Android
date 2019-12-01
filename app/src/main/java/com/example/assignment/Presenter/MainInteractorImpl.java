@@ -18,9 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.assignment.DB.AppDatabase;
 import com.example.assignment.Interfaces.GetDataListener;
 import com.example.assignment.Interfaces.MainInteractor;
-import com.example.assignment.DB.AppDatabase;
+import com.example.assignment.R;
 import com.example.assignment.Util.API;
 import com.example.assignment.dataModel.AssignmentDataManager;
 import com.example.assignment.dataModel.AssignmentModel;
@@ -46,13 +47,14 @@ public class MainInteractorImpl implements MainInteractor {
     private RequestQueue mRequestQueue;
     private AppDatabase mDatabase;
     private SharedPreferences sharedpreferences;
+    private Context mContext;
     private final Response.Listener<String> onEQLoaded = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
             List<AssignmentModel> assignmentModelsList = new ArrayList<>();
             JSONObject jsonObject;
             JSONArray jsonArray = null;
-            String mainTitle = null;
+            String mainTitle;
             try {
                 jsonObject = new JSONObject(response);
                 mainTitle = jsonObject.getString("title");
@@ -70,14 +72,19 @@ public class MainInteractorImpl implements MainInteractor {
                 assert jsonArray != null;
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject1 = jsonArray.getJSONObject(i);
-                    AssignmentModel assignmentModel = new AssignmentModel(jsonObject1.getString("title"),
-                            jsonObject1.getString("description"),
-                            jsonObject1.getString("imageHref"));
-                    addToDB(assignmentModel);
-                    assignmentModelsList.add(assignmentModel);
+                    String title = jsonObject1.getString("title");
+                    String description = jsonObject1.getString("description");
+                    String imageHref = jsonObject1.getString("imageHref");
+                    if ((title != null) && (description != null) && (imageHref != null) &&
+                            !title.contains("null") && !description.contains("null") && !imageHref.contains("null")) {
+                        AssignmentModel assignmentModel = new AssignmentModel(title, description
+                                , imageHref);
+                        addToDB(assignmentModel);
+                        assignmentModelsList.add(assignmentModel);
+                    }
 
                 }
-                mGetDatalistener.onSuccess(mainTitle, assignmentModelsList);
+                mGetDatalistener.onSuccess(mContext.getString(R.string.success), assignmentModelsList);
 
             } catch (JsonSyntaxException ex) {
 
@@ -105,7 +112,8 @@ public class MainInteractorImpl implements MainInteractor {
             if (existingData != null && !existingData.isEmpty()) {
                 // we have cached copy of data for restoring purpose
                 shouldLoadFromNetwork = false;
-                mGetDatalistener.onSuccess(sharedpreferences.getString("ActivityTitle", ""), existingData);
+
+                mGetDatalistener.onSuccess(context.getString(R.string.restore), existingData);
             } else {
                 shouldLoadFromNetwork = true;
             }
@@ -127,6 +135,7 @@ public class MainInteractorImpl implements MainInteractor {
     private void initNetworkCall(Context context) {
 
         cancelAllRequests();
+        mContext = context;
         sharedpreferences = context.getSharedPreferences(API.MyPREFERENCES, Context.MODE_PRIVATE);
         mDatabase = Room.databaseBuilder(context, AppDatabase.class, "production")
                 .build();

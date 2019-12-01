@@ -13,5 +13,5 @@ public interface MainView {
 
     void hideProgress();
 
-    void setMainTitle(String title);
+    void setMainTitle();
 }

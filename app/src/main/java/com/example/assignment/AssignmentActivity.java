@@ -32,6 +32,7 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
     private final String LOADING_TAG = "MainActivity_LOADING";
     private final String CONTENT_TAG = "MainActivity_CONTENT";
     private final String STATE_TAG = "MainActivity_KeyForLayoutManagerState";
+
     LinearLayoutManager linearLayoutManager;
     AssignmentDemoAdapter mAssignmenAdapter;
     List<AssignmentModel> assignmentModelsList;
@@ -56,6 +57,7 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
             wasLoadingState = savedInstanceState.getBoolean(LOADING_TAG, false);
             wasRestoringState = savedInstanceState.getBoolean(CONTENT_TAG, false);
             savedRecyclerLayoutState = savedInstanceState.getParcelable(STATE_TAG);
+
         }
         if (!isInternetOn(this)) {
             OfflineLoadData();
@@ -164,8 +166,8 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
 
 
     @Override
-    public void setMainTitle(String title) {
-        this.setTitle(title);
+    public void setMainTitle() {
+        this.setTitle(sharedpreferences.getString("ActivityTitle", ""));
     }
 
     @Override
@@ -186,6 +188,7 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
         }
 
         outState.putParcelable(STATE_TAG, linearLayoutManager.onSaveInstanceState());
+
 
         super.onSaveInstanceState(outState);
     }

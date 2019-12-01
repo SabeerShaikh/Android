@@ -48,7 +48,7 @@ public class MainPresenterImpl implements MainPresenter, GetDataListener {
 
 
         if (mMainView != null) {
-            mMainView.setMainTitle(title);
+            mMainView.setMainTitle();
             mMainView.hideProgress();
             mMainView.onGetDataSuccess(list);
         }

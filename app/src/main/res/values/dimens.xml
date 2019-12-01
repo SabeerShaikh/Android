@@ -1,3 +1,13 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="image_width">130dp</dimen>
+    <dimen name="right_arrow_width">24dp</dimen>
+    <dimen name="right_arrow_height">24dp</dimen>
+    <dimen name="card_bottom_padding">5dp</dimen>
+    <dimen name="card_ending_padding">5dp</dimen>
+    <dimen name="card_top_padding">5dp</dimen>
+    <dimen name="card_start_padding">10dp</dimen>
+    <dimen name="start_padding">16dp</dimen>
+    <dimen name="end_padding">16dp</dimen>
+    <dimen name="top_padding">16dp</dimen>
 </resources>
