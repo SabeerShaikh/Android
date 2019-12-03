@@ -12,6 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * Created by Sabeer Shaikh on 11/28/19.
+ */
 public class AssignmentDemoAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     private List<AssignmentModel> mDatalist;
@@ -37,7 +40,7 @@ public class AssignmentDemoAdapter extends RecyclerView.Adapter<ItemViewHolder> 
         Picasso.get()
                 .load(assignmentModel.getImageHref())
                 .fit()
-                .into(holder.imageView,new com.squareup.picasso.Callback() {
+                .into(holder.imageView, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
                         //Success image already loaded into the view

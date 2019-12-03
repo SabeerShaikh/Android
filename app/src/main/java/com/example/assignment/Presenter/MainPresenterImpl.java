@@ -11,6 +11,9 @@ import com.example.assignment.dataModel.AssignmentModel;
 
 import java.util.List;
 
+/**
+ * Created by Sabeer Shaikh on 11/28/19.
+ */
 public class MainPresenterImpl implements MainPresenter, GetDataListener {
 
     private MainView mMainView;
@@ -19,6 +22,10 @@ public class MainPresenterImpl implements MainPresenter, GetDataListener {
     public MainPresenterImpl(MainView mMainView) {
         this.mMainView = mMainView;
         this.mInteractor = new MainInteractorImpl(this);
+    }
+
+    public MainView getMainView() {
+        return mMainView;
     }
 
     @Override

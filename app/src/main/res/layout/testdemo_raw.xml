@@ -9,17 +9,16 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_gravity="center"
-  >
+        android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:paddingStart="@dimen/card_start_padding"
             android:paddingTop="@dimen/card_top_padding"
             android:paddingEnd="@dimen/card_ending_padding"
-            android:paddingBottom="@dimen/card_bottom_padding"
-            android:orientation="horizontal">
+            android:paddingBottom="@dimen/card_bottom_padding">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -46,19 +45,19 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/image_test"
                 android:layout_width="@dimen/image_width"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:id="@+id/image_test"
                 />
+
             <ImageView
+                android:id="@+id/image_right"
                 android:layout_width="@dimen/right_arrow_width"
                 android:layout_height="@dimen/right_arrow_height"
-                android:scaleType="fitXY"
-                android:src="@drawable/right"
                 android:layout_gravity="center"
-                android:id="@+id/image_right"
-                />
+                android:scaleType="fitXY"
+                android:src="@drawable/right" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

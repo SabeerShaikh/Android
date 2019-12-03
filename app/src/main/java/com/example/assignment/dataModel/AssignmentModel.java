@@ -5,6 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Created by Sabeer Shaikh on 11/28/19.
+ */
 @Entity
 public class AssignmentModel {
     /* @PrimaryKey(autoGenerate = true)

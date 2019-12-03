@@ -25,7 +25,6 @@ import com.example.assignment.R;
 import com.example.assignment.Util.API;
 import com.example.assignment.dataModel.AssignmentDataManager;
 import com.example.assignment.dataModel.AssignmentModel;
-import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,20 +33,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Sabeer Shaikh on 11/28/19.
+ */
 public class MainInteractorImpl implements MainInteractor {
 
     private final String REQUEST_TAG = "Demo-Network-Call";
     private GetDataListener mGetDatalistener;
-    private final Response.ErrorListener onEQError = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            mGetDatalistener.onFailure(error.toString());
-        }
-    };
+
     private RequestQueue mRequestQueue;
     private AppDatabase mDatabase;
     private SharedPreferences sharedpreferences;
     private Context mContext;
+    //Response from the Server
     private final Response.Listener<String> onEQLoaded = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
@@ -68,7 +66,7 @@ public class MainInteractorImpl implements MainInteractor {
             }
             try {
                 JSONObject jsonObject1;
-
+                //Fetching data and adding data into model arraylist and storing in room database
                 assert jsonArray != null;
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject1 = jsonArray.getJSONObject(i);
@@ -79,31 +77,31 @@ public class MainInteractorImpl implements MainInteractor {
                             !title.contains("null") && !description.contains("null") && !imageHref.contains("null")) {
                         AssignmentModel assignmentModel = new AssignmentModel(title, description
                                 , imageHref);
+                        //adding to room database
                         addToDB(assignmentModel);
                         assignmentModelsList.add(assignmentModel);
                     }
 
                 }
+
                 mGetDatalistener.onSuccess(mContext.getString(R.string.success), assignmentModelsList);
 
-            } catch (JsonSyntaxException ex) {
-
+            } catch (JSONException ex) {
                 mGetDatalistener.onFailure(ex.toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
+
             }
 
         }
     };
 
     MainInteractorImpl(GetDataListener mGetDatalistener) {
-
         this.mGetDatalistener = mGetDatalistener;
     }
 
+
     @Override
     public void provideData(Context context, boolean isRestoring) {
-
+        //providing data on screen orientation
         boolean shouldLoadFromNetwork;
         if (isRestoring) {
 
@@ -131,6 +129,13 @@ public class MainInteractorImpl implements MainInteractor {
             }
         }
     }
+
+    private final Response.ErrorListener onEQError = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            mGetDatalistener.onFailure(error.toString());
+        }
+    };
 
     private void initNetworkCall(Context context) {
 
@@ -164,6 +169,7 @@ public class MainInteractorImpl implements MainInteractor {
     }
 
     private void addToDB(final AssignmentModel assignmentModel) {
+        //Inserting data in room data
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {

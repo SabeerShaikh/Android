@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.assignment.R;
 
-public class ItemViewHolder extends RecyclerView.ViewHolder {
+/**
+ * Created by Sabeer Shaikh on 11/28/19.
+ */
+class ItemViewHolder extends RecyclerView.ViewHolder {
 
     TextView testTitle;
     TextView testDescription;

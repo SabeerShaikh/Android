@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.assignment.Interfaces.MainView;
 import com.example.assignment.Adapter.AssignmentDemoAdapter;
 import com.example.assignment.DB.AppDatabase;
+import com.example.assignment.Interfaces.MainView;
 import com.example.assignment.Presenter.MainPresenterImpl;
 import com.example.assignment.Util.API;
 import com.example.assignment.dataModel.AssignmentModel;
@@ -28,6 +28,9 @@ import com.example.assignment.dataModel.AssignmentModel;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Created by Sabeer Shaikh on 11/28/19.
+ */
 public class AssignmentActivity extends AppCompatActivity implements MainView, SwipeRefreshLayout.OnRefreshListener {
     private final String LOADING_TAG = "MainActivity_LOADING";
     private final String CONTENT_TAG = "MainActivity_CONTENT";
@@ -52,13 +55,16 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
         setContentView(R.layout.activity_assignment);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         init();
+        //getting all savedInstanceState data
         if (savedInstanceState != null) {
             wasLoadingState = savedInstanceState.getBoolean(LOADING_TAG, false);
             wasRestoringState = savedInstanceState.getBoolean(CONTENT_TAG, false);
             savedRecyclerLayoutState = savedInstanceState.getParcelable(STATE_TAG);
 
         }
+        //if network is not available
         if (!isInternetOn(this)) {
             OfflineLoadData();
             this.setTitle(sharedpreferences.getString("ActivityTitle", ""));
@@ -67,12 +73,14 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
     }
 
     private void OfflineLoadData() {
+        // Creates the databases and initializes it.
         mDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .build();
-
+        //create thread for fetching recodes from database
         runnable = new Runnable() {
             @Override
             public void run() {
+                //Fetching all recodes from database.
                 assignmentModelsList = mDatabase.databaseInterface().getAllItems();
                 mAssignmenAdapter = new AssignmentDemoAdapter(assignmentModelsList);
                 mRecyclerView.setAdapter(mAssignmenAdapter);
@@ -89,14 +97,13 @@ public class AssignmentActivity extends AppCompatActivity implements MainView, S
     }
 
     private void init() {
-        sharedpreferences = getSharedPreferences(API.MyPREFERENCES, Context.MODE_PRIVATE);
 
+        //Initialisation of shared preference
+        sharedpreferences = getSharedPreferences(API.MyPREFERENCES, Context.MODE_PRIVATE);
         mSwipeRefreshLayout = findViewById(R.id.swipe_layout);
         mRecyclerView = findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(this);
-
         mRecyclerView.setLayoutManager(linearLayoutManager);
-
         // Setup refresh listener which triggers new data loading
         mSwipeRefreshLayout.setOnRefreshListener(this);
         // Configure the refreshing colors
