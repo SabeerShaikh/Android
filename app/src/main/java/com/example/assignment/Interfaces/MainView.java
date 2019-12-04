@@ -1,5 +1,7 @@
 package com.example.assignment.Interfaces;
 
+import android.os.Bundle;
+
 import com.example.assignment.dataModel.AssignmentModel;
 
 import java.util.List;
@@ -17,4 +19,6 @@ public interface MainView {
     void hideProgress();
 
     void setMainTitle();
+
+    void onRestoreInstanceState(Bundle savedInstanceState);
 }
